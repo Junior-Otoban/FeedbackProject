@@ -9,5 +9,7 @@ namespace FeedbackApp.Infrastructure.Repositories
 {
     public interface IFeedBackRepository : IGenericRepository<FeedBack>
     {
+        Task<IEnumerable<FeedBack>> GetSentFeedbackLists(int id);
+        Task<IEnumerable<FeedBack>> GetIncomingFeedbackLists(int id);
     }
 }

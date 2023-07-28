@@ -1,11 +1,21 @@
 ﻿using FeedbackApp.Domain;
 using FeedbackApp.Infrastructure.Context;
+using FeedbackApp.Infrastructure.Repositories;
+using FeedbackApp.Infrastructure.Repositories.EntityFramework;
+using FeedbackApp.Services.Mapping;
+using FeedbackApp.Services.Services.Feedback;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAutoMapper(typeof(MapProfile));
+
+builder.Services.AddScoped<IFeedBackService, FeedBackService>();
+builder.Services.AddScoped<IFeedBackRepository, EFFeedBackRepository>();
+
 
 var connectionString = builder.Configuration.GetConnectionString("FeedBack");
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<FeedBackContext>(opt =>
