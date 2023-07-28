@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FeedbackApp.DataTransferObjects.Requests;
+using FeedbackApp.DataTransferObjects.Responses;
 using FeedbackApp.Domain;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace FeedbackApp.Services.Mapping
         public MapProfile()
         {
             CreateMap<CreateFeedBackRequest,FeedBack>();
+            CreateMap<UpdateFeedBackRequest,FeedBack>();
+            CreateMap<FeedBack, FeedBackListResponse>();
         }
     }
 }
