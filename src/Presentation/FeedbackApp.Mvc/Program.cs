@@ -1,9 +1,24 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using FeedbackApp.Domain;
+using FeedbackApp.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+var connectionString = builder.Configuration.GetConnectionString("FeedBack");
+builder.Services.AddEntityFrameworkNpgsql().AddDbContext<FeedBackContext>(opt =>
+        opt.UseNpgsql(connectionString));
+
 var app = builder.Build();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+
+var feedBackContext = services.GetRequiredService<FeedBackContext>();
+feedBackContext.Database.EnsureCreated();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
